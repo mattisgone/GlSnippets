@@ -1,8 +1,5 @@
 #version 120
 
-uniform float leftDisplace;
-uniform float rightDisplace;
-
 void main () {
   // Split texture coordinate into 3 channels
   gl_TexCoord[0] = gl_MultiTexCoord0;

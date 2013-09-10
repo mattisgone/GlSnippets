@@ -10,7 +10,8 @@ uniform sampler2DRect texture;
 uniform vec2 resolution;
 uniform float time;
 uniform float alpha;
-
+uniform vec4 leftColor;
+uniform vec4 rightColor;
 
 float hash(float n) {
   return fract(sin(n) * 43758.5453123f);
@@ -33,9 +34,7 @@ float fbm(float p) {
   return f/0.9375f;
 }
 vec4 mix (vec4 rgba, vec4 r, vec4 gb) {
-  r.gb = vec2(0.f);
-  gb.r = 0.f;
-  return r + gb;
+  return leftColor * r + rightColor * gb;
 }
 
 void main() {
@@ -49,12 +48,11 @@ void main() {
                 vec3(.85, .35, .17)
                 );
   c /= 4.f;
-  
+  //
   vec2 coord = mod(gl_TexCoord[0].xy, resolution);
-  
-  vec2 leftCoord = resolution * mod(gl_TexCoord[0].xy + alpha * vec2(c, 0.f), vec2(1.f, 1.f));
-  vec2 rightCoord = resolution * mod(gl_TexCoord[0].xy + alpha * vec2(c/2.f, 0.f), vec2(1.f, 1.f));
- 
+  vec2 leftCoord = resolution * mod(gl_TexCoord[0].xy + alpha/2.f * vec2(c, 0.f), vec2(1.f, 1.f));
+  vec2 rightCoord = resolution * mod(gl_TexCoord[0].xy + alpha/2.f * vec2(c/2.f, 0.f), vec2(1.f, 1.f));
+  //
   vec4 rgba_channel = texture2DRect(texture, resolution * gl_TexCoord[0].xy);
   vec4 red_channel = texture2DRect(texture, leftCoord);
   vec4 cyan_channel = texture2DRect(texture, rightCoord);

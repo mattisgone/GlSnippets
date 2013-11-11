@@ -12,14 +12,16 @@
 #include "cinder/gl/gl.h"
 #include "cinder/gl/Texture.h"
 
-using namespace ci;
-using namespace ci::app;
-using namespace std;
-
 
 /**
  *
  */
+using namespace ci;
+using namespace ci::app;
+using namespace std;
+
+namespace svvim { namespace ci {
+
 Rectf getCenteredRect(gl::Texture texture, Area containerArea) {
   Rectf bounds = texture.getBounds();
   return bounds.getCenteredFit(containerArea, true);
@@ -67,5 +69,11 @@ Rectf getCoveringRect(gl::Texture texture, Area containerArea) {
   
   return bounds;
 }
+
+// Close Namespace
+}}
+
+// Aliases
+namespace svv = svvim;
 
 #endif
